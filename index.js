@@ -9,6 +9,6 @@ const userRoute = require("./src/routes/user.route");
 
 connectDatabase();
 app.use(express.json());
-app.use("/", userRoute);
+app.use("/user", userRoute);
 
 app.listen(3000);
