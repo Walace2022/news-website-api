@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
 //Banco de dados
-const connectDatabase = require("./src/database/db");
+import connectDatabase from "./src/database/db.js";
 
 //Routes
-const userRoute = require("./src/routes/user.route");
+import userRoute from "./src/routes/user.route.js";
 
 connectDatabase();
 app.use(express.json());
