@@ -8,4 +8,23 @@ const findByIdService = (id) => {
   return User.findById(id);
 };
 
-module.exports = { createService, findAllService, findByIdService };
+const updateService = (
+  id,
+  name,
+  username,
+  email,
+  password,
+  avatar,
+  background
+) =>
+  User.findOneAndUpdate(
+    { _id: id },
+    { name, username, email, password, avatar, background }
+  );
+
+module.exports = {
+  createService,
+  findAllService,
+  findByIdService,
+  updateService,
+};
