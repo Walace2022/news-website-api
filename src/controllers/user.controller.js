@@ -67,7 +67,7 @@ const update = async (req, res) => {
       });
     }
 
-    const { id, user } = req;
+    const { id } = req;
 
     await UserService.updateService(
       id,
