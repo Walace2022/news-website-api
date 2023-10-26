@@ -13,7 +13,7 @@ const create = async (req, res) => {
       title,
       text,
       banner,
-      user: { _id: "652e1c1016b81295e789a722" },
+      user: req.userId,
     });
     res.send({ message: "Criado com sucesso." });
   } catch (err) {
