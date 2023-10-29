@@ -7,6 +7,7 @@ import {
   findByidService,
   searchByTitleService,
   byUserService,
+  updateService,
 } from "../services/news.service.js";
 
 const create = async (req, res) => {
@@ -187,4 +188,29 @@ const byUser = async (req, res) => {
   });
 };
 
-export { create, findAll, topNews, findById, searchByTitle, byUser };
+const update = async (req, res) => {
+  try {
+    const { title, text, banner } = req.body;
+    const { id } = req.params;
+
+    if (!title && !text && !banner) {
+      return res.status(400).send({
+        message: "Envie pelo menos um item para atualizar a noticia.",
+      });
+    }
+
+    const news = await findByidService(id);
+
+    if (String(news.user._id) !== String(req.userId)) {
+      return res.status(400).send("Você não pode atualizar esta noticia.");
+    }
+
+    await updateService(id, title, text, banner);
+
+    return res.send({ message: "Noticia atualizada com sucesso." });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export { create, findAll, topNews, findById, searchByTitle, byUser, update };
