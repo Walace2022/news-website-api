@@ -3,6 +3,7 @@ import {
   createService,
   findAllService,
   countNews,
+  topnewsService,
 } from "../services/news.service.js";
 
 const create = async (req, res) => {
@@ -83,4 +84,31 @@ const findAll = async (req, res) => {
   }
 };
 
-export { create, findAll };
+const topNews = async (req, res) => {
+  try {
+    const news = await topnewsService();
+    if (!news) {
+      return res
+        .status(404)
+        .send({ message: "Nenhuma noticia publicada no momento." });
+    }
+
+    res.send({
+      news: {
+        id: news._id,
+        title: news.title,
+        text: news.text,
+        banner: news.banner,
+        likes: news.likes,
+        comments: news.comments,
+        name: news.user.name,
+        username: news.user.username,
+        userAvatar: news.user.avatar,
+      },
+    });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export { create, findAll, topNews };
